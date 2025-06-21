@@ -27,4 +27,6 @@ git push origin main --tags
 ```
 
 In your other project, install from tag:
+```
 npm install git+https://github.com/pangphannarupp/web-framework.git#v1.0.0
+```
