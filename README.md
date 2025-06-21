@@ -1,4 +1,5 @@
 Use It in Another Project
+
 🔹 Option 1: Use GitHub as a package
 
 In another project, install directly:
@@ -6,11 +7,15 @@ In another project, install directly:
 npm install git+https://github.com/pangphannarupp/web-framework.git
 ```
 You must ensure:
+
 Your package.json is configured with correct main, module, types.
+
 You build it first, or include dist/ in the repo.
+
 🔸 If dist/ is not included, the consuming project will need to build it (not ideal for libraries).
 
 🔹 Option 2: Use GitHub Releases + Prebuilt dist
+
 Build your library:
 
 ```
