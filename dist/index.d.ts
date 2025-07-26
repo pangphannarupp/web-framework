@@ -17,6 +17,8 @@ declare namespace core {
     */
     function addEventListener(eventType: any, func: any): void;
     function removeEventListener(eventType: any, func: any): void;
+    function removeAllEventListeners(eventType: any): void;
+    function clearEventListeners(): void;
     /**
     * Callback Listener
     * used to listen response from Native
@@ -227,7 +229,10 @@ interface DialogInterface {
 }
 interface EventInterface {
     registerEvent(eventName: string, callback: Function): void;
-    responseEvent(eventName: string, data?: any): void;
+    addEventListener(eventName: string, callback: Function): void;
+    removeEventListener(eventName: string, callback: Function): void;
+    removeAllEventListeners(eventName: string, callback: Function): void;
+    clearEventListeners(eventName: string, callback: Function): void;
 }
 interface LoggerInterface {
     initSocket(socket: WebSocket, socketCode: string): void;
@@ -302,6 +307,7 @@ declare const logger: LoggerInterface;
  * This is determined once when the module is loaded.
  */
 declare const isMobilePlatform: boolean;
+declare const eventPlatform: EventInterface;
 
 declare class WebApplication implements ApplicaitonInterface {
     openAppSetting(): Promise<object>;
@@ -467,11 +473,10 @@ declare class MobileDialog implements DialogInterface {
 
 declare class MobileEvent implements EventInterface {
     registerEvent(eventName: string, callback: Function): void;
-    responseEvent(eventName: string, data?: any): void;
-    addListener(eventName: string, callback: void): void;
-    removeListener(eventName: string, callback: void): void;
-    removeAllListeners(eventName: string): void;
-    emit(eventName: string, data: object): void;
+    addEventListener(eventName: string, callback: Function): void;
+    removeEventListener(eventName: string, callback: Function): void;
+    removeAllEventListeners(eventName: string): void;
+    clearEventListeners(): void;
 }
 
 /**
@@ -573,6 +578,36 @@ declare class MobileUnityAds implements UnityAdsInterface {
 
 declare class DateTimeUtil {
     getFormattedDate(): string;
+    formatDate(date: Date): string;
+    formatDateOnly(date: Date): string;
+    formatTimeOnly(date: Date): string;
+    getUnixTimestamp(date?: Date): number;
+    getMillisecondsTimestamp(date?: Date): number;
+    fromUnixTimestamp(unix: number): Date;
+    addDays(date: Date, days: number): Date;
+    addMinutes(date: Date, minutes: number): Date;
+    addSeconds(date: Date, seconds: number): Date;
+    isSameDay(date1: Date, date2: Date): boolean;
+    isToday(date: Date): boolean;
+    isBeforeNow(date: Date): boolean;
+    isAfterNow(date: Date): boolean;
+    getTimeAgo(date: Date): string;
+    convertDateToString(date: Date, format?: string): string;
+    convertStringToDate(dateString: string, format?: string): Date | null;
+    calculateDaysBetween(startDate: string, endDate: string, format?: string): number | null;
+    convertEnglishMonthToKhmer(dateString: string): string | null;
+    findPreviousWeekAgo(weeksAgo: number): Date;
+    findNextWeek(weeksAhead: number): Date;
+    findPreviousMonthAgo(monthsAgo: number): Date;
+    findNextMonth(monthsAhead: number): Date;
+    getCurrentDate(format?: string): string;
+    getDayTwoDigit(day: number): string;
+    getMonthText(monthNumber: number): string;
+    isCurrentTimeInRange(startTime: string, endTime: string): boolean;
+    isInNightTimeRange(startHour: number, startMinute: number, endHour: number, endMinute: number): boolean;
+    isTodayInRange(startDateTime: string, endDateTime: string): boolean;
+    private readonly khmerMonths;
+    private readonly englishMonths;
     private static instance;
     private constructor();
     static getInstance(): DateTimeUtil;
@@ -597,4 +632,4 @@ interface DataStore {
  * CONFIG
 */
 
-export { type ApplicaitonInterface, type BiometricInterface, type DataStore, DateTimeUtil, type DeviceInterface, type DialogInterface, type EventInterface, LiveData, type LoggerInterface, MobileApplication, MobileBiometric, MobileDevice, MobileDialog, MobileEvent, MobileLogger, MobileNetwork, MobilePlatform, MobileSample, MobileUnityAds, type NetworkInterface, type PlatformInterface, type SampleInterface, type UnityAdsInterface, type UrlInterface, WebApplication, WebBiometric, WebDevice, WebDialog, WebLogger, WebNetwork, WebPlatform, core as default, getPlatform, isMobile, isMobilePlatform, logger, platform };
+export { type ApplicaitonInterface, type BiometricInterface, type DataStore, DateTimeUtil, type DeviceInterface, type DialogInterface, type EventInterface, LiveData, type LoggerInterface, MobileApplication, MobileBiometric, MobileDevice, MobileDialog, MobileEvent, MobileLogger, MobileNetwork, MobilePlatform, MobileSample, MobileUnityAds, type NetworkInterface, type PlatformInterface, type SampleInterface, type UnityAdsInterface, type UrlInterface, WebApplication, WebBiometric, WebDevice, WebDialog, WebLogger, WebNetwork, WebPlatform, core as default, eventPlatform, getPlatform, isMobile, isMobilePlatform, logger, platform };
